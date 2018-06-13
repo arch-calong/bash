@@ -9,8 +9,6 @@ _basever=4.4
 _patchlevel=023
 pkgver=${_basever}.${_patchlevel}
 pkgrel=1
-pkgdesc='The GNU Bourne Again shell'
-arch=('i686' 'x86_64')
 license=('GPL')
 url='http://www.gnu.org/software/bash/bash.html'
 groups=('base')
@@ -112,6 +110,8 @@ check() {
 }
 
 package_bash() {
+    pkgdesc='The GNU Bourne Again shell'
+    arch=('i686' 'x86_64')
     backup=(etc/bash.bash_logout} etc/skel/.bash{_profile,_logout})
     depends=('glibc'
         'ncurses'
@@ -130,6 +130,8 @@ package_bash() {
 }
 
 package_bashrc-manjaro(){
+    pkgdesc='Manjaro's default bashrc'
+    arch=('any')
     backup=(etc/bash.bash{rc,_logout} etc/skel/.bash{rc,_profile,_logout})
     depends=('bash')
     provides=('bashrc')

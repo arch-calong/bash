@@ -108,7 +108,7 @@ check() {
 
 package_bash() {
     pkgdesc='The GNU Bourne Again shell'
-    backup=(etc/bash.bash_logout} etc/skel/.bash{_profile,_logout})
+    backup=(etc/bash.bash_logout etc/skel/.bash{_profile,_logout})
     depends=('glibc'
         'ncurses'
         'readline>=7.0')
@@ -125,7 +125,7 @@ package_bash() {
     install -m644 dot.bash_logout "$pkgdir"/etc/skel/.bash_logout
 }
 
-package_bashrc-manjaro(){
+package_bashrc-manjaro() {
     pkgdesc="Manjaro's default bashrc"
     arch=('any')
     backup=('etc/bash.bashrc etc/skel/.bashrc')

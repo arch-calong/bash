@@ -9,6 +9,7 @@ _basever=4.4
 _patchlevel=023
 pkgver=${_basever}.${_patchlevel}
 pkgrel=1
+arch=('i686' 'x86_64')
 license=('GPL')
 url='http://www.gnu.org/software/bash/bash.html'
 groups=('base')
@@ -80,8 +81,7 @@ if [[ $((10#${_patchlevel})) -gt 0 ]]; then
 fi
 
 prepare() {
-    cd $pkgname-$_basever
-
+    cd $pkgbase-$_basever
     for (( _p=1; _p<=$((10#${_patchlevel})); _p++ )); do
     msg "applying patch bash${_basever//.}-$(printf "%03d" $_p)"
     patch -p0 -i ../bash${_basever//.}-$(printf "%03d" $_p)
@@ -89,8 +89,7 @@ prepare() {
 }
 
 build() {
-    cd $pkgname-$_basever
-
+    cd $pkgbase-$_basever
     _bashconfig=(-DDEFAULT_PATH_VALUE=\'\"/usr/local/sbin:/usr/local/bin:/usr/bin\"\'
                -DSTANDARD_UTILS_PATH=\'\"/usr/bin\"\'
                -DSYS_BASHRC=\'\"/etc/bash.bashrc\"\'
@@ -109,7 +108,6 @@ check() {
 
 package_bash() {
     pkgdesc='The GNU Bourne Again shell'
-    arch=('i686' 'x86_64')
     backup=(etc/bash.bash_logout} etc/skel/.bash{_profile,_logout})
     depends=('glibc'
         'ncurses'
@@ -128,12 +126,11 @@ package_bash() {
 }
 
 package_bashrc-manjaro(){
-    pkgdesc='Manjaro's default bashrc'
+    pkgdesc="Manjaro's default bashrc"
     arch=('any')
-    backup=(etc/bash.bashrc etc/skel/.bashrc)
+    backup=('etc/bash.bashrc etc/skel/.bashrc')
     depends=('bash')
     provides=('bashrc')
-
-    install -Dm644 system.bashrc $pkgdir/etc/bash.bashrc
+    install -Dm644 system.bashrc "$pkgdir"/etc/bash.bashrc
     install -Dm644 dot.bashrc "$pkgdir"/etc/skel/.bashrc
 }

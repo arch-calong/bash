@@ -130,7 +130,7 @@ package_bash() {
 package_bashrc-manjaro(){
     pkgdesc='Manjaro's default bashrc'
     arch=('any')
-    backup=(etc/bash.bash{rc,_logout} etc/skel/.bash{rc,_profile,_logout})
+    backup=(etc/bash.bashrc etc/skel/.bashrc)
     depends=('bash')
     provides=('bashrc')
 

@@ -8,7 +8,7 @@ pkgname=('bash' 'bashrc-manjaro')
 _basever=4.4
 _patchlevel=023
 pkgver=${_basever}.${_patchlevel}
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 license=('GPL')
 url='http://www.gnu.org/software/bash/bash.html'
@@ -109,7 +109,8 @@ check() {
 package_bash() {
     pkgdesc='The GNU Bourne Again shell'
     backup=(etc/bash.bash_logout etc/skel/.bash{_profile,_logout})
-    depends=('glibc'
+    depends=('bashrc'
+        'glibc'
         'ncurses'
         'readline>=7.0')
     optdepends=('bash-completion: for tab completion')

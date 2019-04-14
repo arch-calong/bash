@@ -6,7 +6,7 @@
 pkgbase=bash
 pkgname=('bash' 'bashrc-manjaro')
 _basever=5.0
-_patchlevel=0
+_patchlevel=003
 pkgver=${_basever}.${_patchlevel}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -25,7 +25,13 @@ md5sums=('2b44b47b905be16f45709648f671820b'
          '2902e0fee7a9168f3a4fd2ccd60ff047'
          '42f4400ed2314bd7519c020d0187edc5'
          'd8f3f334e72c0e30032eae1a1229aef1'
-         '472f536d7c9e8250dc4568ec4cfaf294')
+         '472f536d7c9e8250dc4568ec4cfaf294'
+         'b026862ab596a5883bb4f0d1077a3819'
+         'SKIP'
+         '2f4a7787365790ae57f36b311701ea7e'
+         'SKIP'
+         'af7f2dd93fd5429fb5e9a642ff74f87d'
+         'SKIP')
 validpgpkeys=('7C0135FB088AAF6C66C650B9BB5869F064EA74AB') # Chet Ramey
 
 if [[ $((10#${_patchlevel})) -gt 0 ]]; then

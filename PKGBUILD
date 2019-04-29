@@ -8,7 +8,7 @@ pkgname=('bash' 'bashrc-manjaro')
 _basever=5.0
 _patchlevel=003
 pkgver=${_basever}.${_patchlevel}
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 license=('GPL')
 url='http://www.gnu.org/software/bash/bash.html'
@@ -89,7 +89,7 @@ package_bash() {
 package_bashrc-manjaro() {
     pkgdesc="Manjaro's default bashrc"
     arch=('any')
-    backup=('etc/bash.bashrc etc/skel/.bashrc')
+    backup=('etc/bash.bashrc' 'etc/skel/.bashrc')
     depends=('bash')
     provides=('bashrc')
     install -Dm644 system.bashrc "$pkgdir"/etc/bash.bashrc

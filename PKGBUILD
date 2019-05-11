@@ -6,9 +6,9 @@
 pkgbase=bash
 pkgname=('bash' 'bashrc-manjaro')
 _basever=5.0
-_patchlevel=003
+_patchlevel=007
 pkgver=${_basever}.${_patchlevel}
-pkgrel=2
+pkgrel=1
 arch=('i686' 'x86_64')
 license=('GPL')
 url='http://www.gnu.org/software/bash/bash.html'
@@ -31,6 +31,14 @@ md5sums=('2b44b47b905be16f45709648f671820b'
          '2f4a7787365790ae57f36b311701ea7e'
          'SKIP'
          'af7f2dd93fd5429fb5e9a642ff74f87d'
+         'SKIP'
+         'b60545b273bfa4e00a760f2c648bed9c'
+         'SKIP'
+         '875a0bedf48b74e453e3997c84b5d8a4'
+         'SKIP'
+         '4a8ee95adb72c3aba03d9e8c9f96ece6'
+         'SKIP'
+         '411560d81fde2dc5b17b83c3f3b58c6f'
          'SKIP')
 validpgpkeys=('7C0135FB088AAF6C66C650B9BB5869F064EA74AB') # Chet Ramey
 

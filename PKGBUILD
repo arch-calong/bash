@@ -6,7 +6,7 @@
 pkgbase=bash
 pkgname=('bash' 'bashrc-manjaro')
 _basever=5.0
-_patchlevel=007
+_patchlevel=009
 pkgver=${_basever}.${_patchlevel}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -21,7 +21,7 @@ source=(https://ftp.gnu.org/gnu/bash/bash-$_basever.tar.gz{,.sig}
     'system.bash_logout')
 md5sums=('2b44b47b905be16f45709648f671820b'
          'SKIP'
-         '7330b61cf37870d609c5fdfd3fa8f60a'
+         'f6d012f6bed87567b0df448a5a3a78f2'
          '2902e0fee7a9168f3a4fd2ccd60ff047'
          '42f4400ed2314bd7519c020d0187edc5'
          'd8f3f334e72c0e30032eae1a1229aef1'
@@ -39,6 +39,10 @@ md5sums=('2b44b47b905be16f45709648f671820b'
          '4a8ee95adb72c3aba03d9e8c9f96ece6'
          'SKIP'
          '411560d81fde2dc5b17b83c3f3b58c6f'
+         'SKIP'
+         'dd7cf7a784d1838822cad8d419315991'
+         'SKIP'
+         'c1b3e937cd6dccbb7fd772f32812a0da'
          'SKIP')
 validpgpkeys=('7C0135FB088AAF6C66C650B9BB5869F064EA74AB') # Chet Ramey
 

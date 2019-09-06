@@ -6,7 +6,7 @@
 pkgbase=bash
 pkgname=('bash' 'bashrc-manjaro')
 _basever=5.0
-_patchlevel=009
+_patchlevel=011
 pkgver=${_basever}.${_patchlevel}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -19,31 +19,35 @@ source=(https://ftp.gnu.org/gnu/bash/bash-$_basever.tar.gz{,.sig}
     'dot.bash_logout'
     'system.bashrc'
     'system.bash_logout')
-md5sums=('2b44b47b905be16f45709648f671820b'
-         'SKIP'
-         'f6d012f6bed87567b0df448a5a3a78f2'
-         '2902e0fee7a9168f3a4fd2ccd60ff047'
-         '42f4400ed2314bd7519c020d0187edc5'
-         'd8f3f334e72c0e30032eae1a1229aef1'
-         '472f536d7c9e8250dc4568ec4cfaf294'
-         'b026862ab596a5883bb4f0d1077a3819'
-         'SKIP'
-         '2f4a7787365790ae57f36b311701ea7e'
-         'SKIP'
-         'af7f2dd93fd5429fb5e9a642ff74f87d'
-         'SKIP'
-         'b60545b273bfa4e00a760f2c648bed9c'
-         'SKIP'
-         '875a0bedf48b74e453e3997c84b5d8a4'
-         'SKIP'
-         '4a8ee95adb72c3aba03d9e8c9f96ece6'
-         'SKIP'
-         '411560d81fde2dc5b17b83c3f3b58c6f'
-         'SKIP'
-         'dd7cf7a784d1838822cad8d419315991'
-         'SKIP'
-         'c1b3e937cd6dccbb7fd772f32812a0da'
-         'SKIP')
+sha256sums=('b4a80f2ac66170b2913efbfb9f2594f1f76c7b1afd11f799e22035d63077fb4d'
+            'SKIP'
+            'ea3fb1f21b1ad236701e59598a57fe3d903ad844c85ae4691ed76aa2f0af49a2'
+            'e149407c2bee17779caec70a7edd3d0000d172e7e4347429b80cb4d55bcec9c2'
+            '4330edf340394d0dae50afb04ac2a621f106fe67fb634ec81c4bfb98be2a1eb5'
+            '5fdc20c44bc9058f728d11111327f4dbb5598fec4d948dd5265211598667f9f0'
+            '025bccfb374a3edce0ff8154d990689f30976b78f7a932dc9a6fcef81821811e'
+            'f2fe9e1f0faddf14ab9bfa88d450a75e5d028fedafad23b88716bd657c737289'
+            'SKIP'
+            '87e87d3542e598799adb3e7e01c8165bc743e136a400ed0de015845f7ff68707'
+            'SKIP'
+            '4eebcdc37b13793a232c5f2f498a5fcbf7da0ecb3da2059391c096db620ec85b'
+            'SKIP'
+            '14447ad832add8ecfafdce5384badd933697b559c4688d6b9e3d36ff36c62f08'
+            'SKIP'
+            '5bf54dd9bd2c211d2bfb34a49e2c741f2ed5e338767e9ce9f4d41254bf9f8276'
+            'SKIP'
+            'd68529a6ff201b6ff5915318ab12fc16b8a0ebb77fda3308303fcc1e13398420'
+            'SKIP'
+            '17b41e7ee3673d8887dd25992417a398677533ab8827938aa41fad70df19af9b'
+            'SKIP'
+            'eec64588622a82a5029b2776e218a75a3640bef4953f09d6ee1f4199670ad7e3'
+            'SKIP'
+            'ed3ca21767303fc3de93934aa524c2e920787c506b601cc40a4897d4b094d903'
+            'SKIP'
+            'd6fbc325f0b5dc54ddbe8ee43020bced8bd589ddffea59d128db14b2e52a8a11'
+            'SKIP'
+            '2c4de332b91eaf797abbbd6c79709690b5cbd48b12e8dfe748096dbd7bf474ea'
+            'SKIP')
 validpgpkeys=('7C0135FB088AAF6C66C650B9BB5869F064EA74AB') # Chet Ramey
 
 if [[ $((10#${_patchlevel})) -gt 0 ]]; then

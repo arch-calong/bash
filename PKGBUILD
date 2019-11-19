@@ -8,11 +8,10 @@ pkgname=('bash' 'bashrc-manjaro')
 _basever=5.0
 _patchlevel=011
 pkgver=${_basever}.${_patchlevel}
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 license=('GPL')
 url='http://www.gnu.org/software/bash/bash.html'
-groups=('base')
 source=(https://ftp.gnu.org/gnu/bash/bash-$_basever.tar.gz{,.sig}
     'dot.bashrc'
     'dot.bash_profile'

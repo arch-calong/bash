@@ -4,7 +4,7 @@
 # Contributor: Aaron Griffin <aaron@archlinux.org>
 
 pkgbase=bash
-pkgname=('bash' 'bashrc-manjaro' 'bashrc-manjaro-plasma')
+pkgname=('bash' 'bashrc-manjaro')
 _basever=5.0
 _patchlevel=011
 pkgver=${_basever}.${_patchlevel}
@@ -14,7 +14,6 @@ license=('GPL')
 url='http://www.gnu.org/software/bash/bash.html'
 source=(https://ftp.gnu.org/gnu/bash/bash-$_basever.tar.gz{,.sig}
     'dot.bashrc'
-    'dot.bashrc-plasma'
     'dot.bash_profile'
     'dot.bash_logout'
     'system.bashrc'
@@ -22,7 +21,6 @@ source=(https://ftp.gnu.org/gnu/bash/bash-$_basever.tar.gz{,.sig}
 sha256sums=('b4a80f2ac66170b2913efbfb9f2594f1f76c7b1afd11f799e22035d63077fb4d'
             'SKIP'
             'ea3fb1f21b1ad236701e59598a57fe3d903ad844c85ae4691ed76aa2f0af49a2'
-            'bf550797b3e2b1a519dbbfb02905b7314795fc4dbe209592f1f870a9478685d1'
             'e149407c2bee17779caec70a7edd3d0000d172e7e4347429b80cb4d55bcec9c2'
             '4330edf340394d0dae50afb04ac2a621f106fe67fb634ec81c4bfb98be2a1eb5'
             '5fdc20c44bc9058f728d11111327f4dbb5598fec4d948dd5265211598667f9f0'
@@ -111,16 +109,4 @@ package_bashrc-manjaro() {
     provides=('bashrc')
     install -Dm644 system.bashrc "$pkgdir"/etc/bash.bashrc
     install -Dm644 dot.bashrc "$pkgdir"/etc/skel/.bashrc
-}
-
-# workaround for envars not being exported from ~/.profile in plasma
-package_bashrc-manjaro-plasma() {
-    pkgdesc="Manjaro-KDE's default bashrc"
-    arch=('any')
-    backup=('etc/bash.bashrc' 'etc/skel/.bashrc')
-    depends=('bash')
-    provides=('bashrc')
-    conflicts=('bashrc-manjaro')
-    install -Dm644 system.bashrc "$pkgdir"/etc/bash.bashrc
-    install -Dm644 dot.bashrc-plasma "$pkgdir"/etc/skel/.bashrc
 }

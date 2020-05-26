@@ -6,7 +6,7 @@
 pkgbase=bash
 pkgname=('bash' 'bashrc-manjaro')
 _basever=5.0
-_patchlevel=016
+_patchlevel=017
 pkgver=${_basever}.${_patchlevel}
 pkgrel=1
 arch=('i686' 'x86_64')
@@ -56,6 +56,8 @@ sha256sums=('b4a80f2ac66170b2913efbfb9f2594f1f76c7b1afd11f799e22035d63077fb4d'
             'a517df2dda93b26d5cbf00effefea93e3a4ccd6652f152f4109170544ebfa05e'
             'SKIP'
             'ffd1d7a54a99fa7f5b1825e4f7e95d8c8876bc2ca151f150e751d429c650b06d'
+            'SKIP'
+            '4cf3b9fafb8a66d411dd5fc9120032533a4012df1dc6ee024c7833373e2ddc31'
             'SKIP')
 validpgpkeys=('7C0135FB088AAF6C66C650B9BB5869F064EA74AB') # Chet Ramey
 

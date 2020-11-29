@@ -1,5 +1,10 @@
-# Maintainer: Bernhard Landauer <oberon@manjaro.org>
-# Maintainer:  Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
+# Maintainer: Philip Müller <philm[at]manjaro[dot]org>
+# Maintainer: Bernhard Landauer <bernhard[at]manjaro[dot]org>
+# Maintainer: Helmut Stult <helmut[at]manjaro[dot]org>
+
+# Arch credits:
+# Maintainer: Levente Polyak <anthraxx[at]archlinux[dot]org>
+# Contributor: Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
 # Contributor: Allan McRae <allan@archlinux.org>
 # Contributor: Aaron Griffin <aaron@archlinux.org>
 
@@ -8,16 +13,87 @@ pkgname=('bash' 'bashrc-manjaro')
 _basever=5.0
 _patchlevel=018
 pkgver=${_basever}.${_patchlevel}
-pkgrel=1
+pkgrel=2
+pkgdesc='The GNU Bourne Again shell'
 arch=('x86_64')
 license=('GPL')
-url='http://www.gnu.org/software/bash/bash.html'
+url='https://www.gnu.org/software/bash/bash.html'
 source=(https://ftp.gnu.org/gnu/bash/bash-$_basever.tar.gz{,.sig}
     'dot.bashrc'
     'dot.bash_profile'
     'dot.bash_logout'
     'system.bashrc'
     'system.bash_logout')
+
+validpgpkeys=('7C0135FB088AAF6C66C650B9BB5869F064EA74AB') # Chet Ramey
+
+if [[ $((10#${_patchlevel})) -gt 0 ]]; then
+    for (( _p=1; _p<=$((10#${_patchlevel})); _p++ )); do
+    source=(${source[@]} https://ftp.gnu.org/gnu/bash/bash-$_basever-patches/bash${_basever//.}-$(printf "%03d" $_p){,.sig})
+    done
+fi
+
+prepare() {
+    cd $pkgbase-$_basever
+    for (( _p=1; _p<=$((10#${_patchlevel})); _p++ )); do
+    msg "applying patch bash${_basever//.}-$(printf "%03d" $_p)"
+    patch -p0 -i ../bash${_basever//.}-$(printf "%03d" $_p)
+    done
+}
+
+build() {
+    cd $pkgbase-$_basever
+    _bashconfig=(-DDEFAULT_PATH_VALUE=\'\"/usr/local/sbin:/usr/local/bin:/usr/bin\"\'
+               -DSTANDARD_UTILS_PATH=\'\"/usr/bin\"\'
+               -DSYS_BASHRC=\'\"/etc/bash.bashrc\"\'
+               -DSYS_BASH_LOGOUT=\'\"/etc/bash.bash_logout\"\'
+               -DNON_INTERACTIVE_LOGIN_SHELLS)
+    export CFLAGS="${CFLAGS} ${_bashconfig[@]}"
+
+    ./configure \
+      --prefix=/usr \
+      --with-curses \
+      --enable-readline \
+      --without-bash-malloc\
+      --with-installed-readline
+    make
+}
+
+check() {
+    make -C $pkgname-$_basever check
+}
+
+package_bash() {
+    pkgdesc='The GNU Bourne Again shell'
+    backup=(etc/bash.bash_logout etc/skel/.bash{_profile,_logout})
+    depends=('bashrc'
+             'glibc'
+             'ncurses'
+             'readline'
+	     'libreadline.so')
+    optdepends=('bash-completion: for tab completion')
+    provides=('sh')
+    make -C $pkgname-$_basever DESTDIR="$pkgdir" install
+    ln -s bash "$pkgdir"/usr/bin/sh
+
+    # system-wide configuration files
+    install -Dm644 system.bash_logout "$pkgdir"/etc/bash.bash_logout
+
+    # user configuration file skeletons
+    install -Dm644 dot.bash_profile "$pkgdir"/etc/skel/.bash_profile
+    install -m644 dot.bash_logout "$pkgdir"/etc/skel/.bash_logout
+}
+
+package_bashrc-manjaro() {
+    pkgdesc="Manjaro's default bashrc"
+    arch=('any')
+    backup=('etc/bash.bashrc' 'etc/skel/.bashrc')
+    depends=('bash')
+    provides=('bashrc')
+    install -Dm644 system.bashrc "$pkgdir"/etc/bash.bashrc
+    install -Dm644 dot.bashrc "$pkgdir"/etc/skel/.bashrc
+}
+
 sha256sums=('b4a80f2ac66170b2913efbfb9f2594f1f76c7b1afd11f799e22035d63077fb4d'
             'SKIP'
             'ea3fb1f21b1ad236701e59598a57fe3d903ad844c85ae4691ed76aa2f0af49a2'
@@ -61,66 +137,3 @@ sha256sums=('b4a80f2ac66170b2913efbfb9f2594f1f76c7b1afd11f799e22035d63077fb4d'
             'SKIP'
             '7c314e375a105a6642e8ed44f3808b9def89d15f7492fe2029a21ba9c0de81d3'
             'SKIP')
-validpgpkeys=('7C0135FB088AAF6C66C650B9BB5869F064EA74AB') # Chet Ramey
-
-if [[ $((10#${_patchlevel})) -gt 0 ]]; then
-    for (( _p=1; _p<=$((10#${_patchlevel})); _p++ )); do
-    source=(${source[@]} https://ftp.gnu.org/gnu/bash/bash-$_basever-patches/bash${_basever//.}-$(printf "%03d" $_p){,.sig})
-    done
-fi
-
-prepare() {
-    cd $pkgbase-$_basever
-    for (( _p=1; _p<=$((10#${_patchlevel})); _p++ )); do
-    msg "applying patch bash${_basever//.}-$(printf "%03d" $_p)"
-    patch -p0 -i ../bash${_basever//.}-$(printf "%03d" $_p)
-    done
-}
-
-build() {
-    cd $pkgbase-$_basever
-    _bashconfig=(-DDEFAULT_PATH_VALUE=\'\"/usr/local/sbin:/usr/local/bin:/usr/bin\"\'
-               -DSTANDARD_UTILS_PATH=\'\"/usr/bin\"\'
-               -DSYS_BASHRC=\'\"/etc/bash.bashrc\"\'
-               -DSYS_BASH_LOGOUT=\'\"/etc/bash.bash_logout\"\'
-               -DNON_INTERACTIVE_LOGIN_SHELLS)
-    export CFLAGS="${CFLAGS} ${_bashconfig[@]}"
-
-    ./configure --prefix=/usr --with-curses --enable-readline \
-    --without-bash-malloc --with-installed-readline
-    make
-}
-
-check() {
-    make -C $pkgname-$_basever check
-}
-
-package_bash() {
-    pkgdesc='The GNU Bourne Again shell'
-    backup=(etc/bash.bash_logout etc/skel/.bash{_profile,_logout})
-    depends=('bashrc'
-        'glibc'
-        'ncurses'
-        'readline>=7.0')
-    optdepends=('bash-completion: for tab completion')
-    provides=('sh')
-    make -C $pkgname-$_basever DESTDIR="$pkgdir" install
-    ln -s bash "$pkgdir"/usr/bin/sh
-
-    # system-wide configuration files
-    install -Dm644 system.bash_logout "$pkgdir"/etc/bash.bash_logout
-
-    # user configuration file skeletons
-    install -Dm644 dot.bash_profile "$pkgdir"/etc/skel/.bash_profile
-    install -m644 dot.bash_logout "$pkgdir"/etc/skel/.bash_logout
-}
-
-package_bashrc-manjaro() {
-    pkgdesc="Manjaro's default bashrc"
-    arch=('any')
-    backup=('etc/bash.bashrc' 'etc/skel/.bashrc')
-    depends=('bash')
-    provides=('bashrc')
-    install -Dm644 system.bashrc "$pkgdir"/etc/bash.bashrc
-    install -Dm644 dot.bashrc "$pkgdir"/etc/skel/.bashrc
-}

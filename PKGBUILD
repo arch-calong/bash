@@ -14,7 +14,7 @@ pkgname=('bash' 'bashrc-manjaro')
 _basever=5.1
 _patchlevel=008
 pkgver=${_basever}.${_patchlevel}
-pkgrel=1
+pkgrel=2
 pkgdesc='The GNU Bourne Again shell'
 arch=('x86_64')
 license=('GPL')
@@ -98,7 +98,7 @@ package_bashrc-manjaro() {
 
 sha256sums=('cc012bc860406dcf42f64431bcd3d2fa7560c02915a601aba9cd597a39329baa'
             'SKIP'
-            'ea3fb1f21b1ad236701e59598a57fe3d903ad844c85ae4691ed76aa2f0af49a2'
+            '1f1d9c14b68d69438d671e5010df824acee77dd8111198ecf43ab4f395c644ff'
             'e149407c2bee17779caec70a7edd3d0000d172e7e4347429b80cb4d55bcec9c2'
             '4330edf340394d0dae50afb04ac2a621f106fe67fb634ec81c4bfb98be2a1eb5'
             '5fdc20c44bc9058f728d11111327f4dbb5598fec4d948dd5265211598667f9f0'

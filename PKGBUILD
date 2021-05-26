@@ -14,11 +14,12 @@ pkgname=('bash' 'bashrc-manjaro')
 _basever=5.1
 _patchlevel=008
 pkgver=${_basever}.${_patchlevel}
-pkgrel=2
+pkgrel=3
 pkgdesc='The GNU Bourne Again shell'
 arch=('x86_64')
 license=('GPL')
 url='https://www.gnu.org/software/bash/bash.html'
+depends=('bash-completion')
 source=(https://ftp.gnu.org/gnu/bash/bash-$_basever.tar.gz{,.sig}
     'dot.bashrc'
     'dot.bash_profile'

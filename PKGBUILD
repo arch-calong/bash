@@ -1,6 +1,6 @@
 # Maintainer: Philip Müller <philm[at]manjaro[dot]org>
 # Maintainer: Bernhard Landauer <bernhard[at]manjaro[dot]org>
-# Maintainer: Helmut Stult <helmut[at]manjaro[dot]org>
+# Contributor: Helmut Stult
 
 # Arch credits:
 # Maintainer: Levente Polyak <anthraxx[at]archlinux[dot]org>
@@ -12,9 +12,9 @@
 pkgbase=bash
 pkgname=('bash' 'bashrc-manjaro')
 _basever=5.1
-_patchlevel=008
+_patchlevel=012
 pkgver=${_basever}.${_patchlevel}
-pkgrel=3
+pkgrel=1
 pkgdesc='The GNU Bourne Again shell'
 arch=('x86_64')
 license=('GPL')
@@ -39,7 +39,7 @@ prepare() {
   cd $pkgbase-$_basever
 
   for (( _p=1; _p<=$((10#${_patchlevel})); _p++ )); do
-    msg "applying patch bash${_basever//.}-$(printf "%03d" $_p)"
+    echo "applying patch bash${_basever//.}-$(printf "%03d" $_p)"
     patch -p0 -i ../bash${_basever//.}-$(printf "%03d" $_p)
   done
 }
@@ -76,6 +76,7 @@ package_bash() {
            'bashrc')
   optdepends=('bash-completion: for tab completion')
   provides=('sh')
+
   make -C $pkgname-$_basever DESTDIR="$pkgdir" install
   ln -s bash "$pkgdir/usr/bin/sh"
 
@@ -93,6 +94,7 @@ package_bashrc-manjaro() {
   backup=('etc/bash.bashrc' 'etc/skel/.bashrc')
   depends=('bash')
   provides=('bashrc')
+
   install -Dm644 system.bashrc "$pkgdir/etc/bash.bashrc"
   install -Dm644 dot.bashrc "$pkgdir/etc/skel/.bashrc"
 }
@@ -119,4 +121,12 @@ sha256sums=('cc012bc860406dcf42f64431bcd3d2fa7560c02915a601aba9cd597a39329baa'
             'acfcb8c7e9f73457c0fb12324afb613785e0c9cef3315c9bbab4be702f40393a'
             'SKIP'
             'f22cf3c51a28f084a25aef28950e8777489072628f972b12643b4534a17ed2d1'
+            'SKIP'
+            'e45cda953ab4b4b4bde6dc34d0d8ca40d1cc502046eb28070c9ebcd47e33c3ee'
+            'SKIP'
+            'a2c8d7b2704eeceff7b1503b7ad9500ea1cb6e9393faebdb3acd2afdd7aeae2a'
+            'SKIP'
+            '58191f164934200746f48459a05bca34d1aec1180b08ca2deeee3bb29622027b'
+            'SKIP'
+            '10f189c8367c4a15c7392e7bf70d0ff6953f78c9b312ed7622303a779273ab98'
             'SKIP')

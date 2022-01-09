@@ -14,7 +14,7 @@ pkgname=('bash' 'bashrc-manjaro')
 _basever=5.1
 _patchlevel=016
 pkgver=${_basever}.${_patchlevel}
-pkgrel=1
+pkgrel=2
 pkgdesc='The GNU Bourne Again shell'
 arch=('x86_64')
 license=('GPL')
@@ -79,6 +79,9 @@ package_bash() {
 
   make -C $pkgname-$_basever DESTDIR="$pkgdir" install
   ln -s bash "$pkgdir/usr/bin/sh"
+
+  # Don't overwrite /usr/share/info/dir
+  rm "$pkgdir/usr/share/info/dir"
 
   # system-wide configuration files
   install -Dm644 system.bash_logout "$pkgdir/etc/bash.bash_logout"

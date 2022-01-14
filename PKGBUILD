@@ -104,7 +104,7 @@ package_bashrc-manjaro() {
 
 sha256sums=('cc012bc860406dcf42f64431bcd3d2fa7560c02915a601aba9cd597a39329baa'
             'SKIP'
-            '1f1d9c14b68d69438d671e5010df824acee77dd8111198ecf43ab4f395c644ff'
+            'dc8186a0808a4fc2ffeabafee16cf1ffc946a77426147866b7b35502deafe75e'
             'e149407c2bee17779caec70a7edd3d0000d172e7e4347429b80cb4d55bcec9c2'
             '4330edf340394d0dae50afb04ac2a621f106fe67fb634ec81c4bfb98be2a1eb5'
             '5fdc20c44bc9058f728d11111327f4dbb5598fec4d948dd5265211598667f9f0'

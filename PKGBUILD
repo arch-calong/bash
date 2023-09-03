@@ -14,7 +14,7 @@ pkgname=('bash' 'bashrc-manjaro')
 _basever=5.1
 _patchlevel=016
 pkgver=${_basever}.${_patchlevel}
-pkgrel=2
+pkgrel=3
 pkgdesc='The GNU Bourne Again shell'
 arch=('x86_64')
 license=('GPL')
@@ -76,27 +76,30 @@ package_bash() {
            'bashrc')
   optdepends=('bash-completion: for tab completion')
   provides=('sh')
+  install=bash.install
 
   make -C $pkgname-$_basever DESTDIR="$pkgdir" install
   ln -s bash "$pkgdir/usr/bin/sh"
-
-  # Don't overwrite /usr/share/info/dir
-  rm "$pkgdir/usr/share/info/dir"
+  ln -s bash "$pkgdir/usr/bin/rbash"
 
   # system-wide configuration files
   install -Dm644 system.bash_logout "$pkgdir/etc/bash.bash_logout"
 
   # user configuration file skeletons
-  install -Dm644 dot.bash_profile "$pkgdir/etc/skel/.bash_profile"
+  install -dm755 "$pkgdir/etc/skel/"
+  install -m644 dot.bash_profile "$pkgdir/etc/skel/.bash_profile"
   install -m644 dot.bash_logout "$pkgdir/etc/skel/.bash_logout"
+
+  # Don't overwrite /usr/share/info/dir
+  rm "$pkgdir/usr/share/info/dir"
 }
 
 package_bashrc-manjaro() {
   pkgdesc="Manjaro's default bashrc"
   arch=('any')
-  backup=('etc/bash.bashrc' 'etc/skel/.bashrc')
   depends=('bash')
   provides=('bashrc')
+  backup=('etc/bash.bashrc' 'etc/skel/.bashrc')
 
   install -Dm644 system.bashrc "$pkgdir/etc/bash.bashrc"
   install -Dm644 dot.bashrc "$pkgdir/etc/skel/.bashrc"
@@ -107,7 +110,7 @@ sha256sums=('cc012bc860406dcf42f64431bcd3d2fa7560c02915a601aba9cd597a39329baa'
             'dc8186a0808a4fc2ffeabafee16cf1ffc946a77426147866b7b35502deafe75e'
             'e149407c2bee17779caec70a7edd3d0000d172e7e4347429b80cb4d55bcec9c2'
             '4330edf340394d0dae50afb04ac2a621f106fe67fb634ec81c4bfb98be2a1eb5'
-            '5fdc20c44bc9058f728d11111327f4dbb5598fec4d948dd5265211598667f9f0'
+            '1a3bbc54faaa620d4c0aa3ca6e4202c827fe4b31122f395df6aeeaab3c276883'
             '025bccfb374a3edce0ff8154d990689f30976b78f7a932dc9a6fcef81821811e'
             'ebb07b3dbadd98598f078125d0ae0d699295978a5cdaef6282fe19adef45b5fa'
             'SKIP'

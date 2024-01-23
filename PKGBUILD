@@ -22,8 +22,9 @@ url='https://www.gnu.org/software/bash/bash.html'
 backup=(etc/bash.bash{rc,_logout} etc/skel/.bash{rc,_profile,_logout})
 depends=(readline libreadline.so glibc ncurses)
 optdepends=('bash-completion: for tab completion')
-provides=('sh' 'bashrc-manjaro')
+provides=('sh')
 conflicts=('bashrc-manjaro')
+replaces=('bashrc-manjaro')
 install=bash.install
 source=(https://ftp.gnu.org/gnu/bash/bash-$_basever.tar.gz{,.sig}
         dot.bashrc

@@ -10,24 +10,27 @@
 # Contributor: Allan McRae <allan@archlinux.org>
 # Contributor: Aaron Griffin <aaron@archlinux.org>
 
-pkgbase=bash
-pkgname=('bash' 'bashrc-manjaro')
+pkgname=bash
 _basever=5.2
 _patchlevel=026
 pkgver=${_basever}.${_patchlevel}
-pkgrel=1
+pkgrel=2
 pkgdesc='The GNU Bourne Again shell'
-arch=('x86_64')
+arch=(x86_64)
 license=('GPL-3.0-or-later')
 url='https://www.gnu.org/software/bash/bash.html'
-depends=('bash-completion')
+backup=(etc/bash.bash{rc,_logout} etc/skel/.bash{rc,_profile,_logout})
+depends=(readline libreadline.so glibc ncurses)
+optdepends=('bash-completion: for tab completion')
+provides=('sh' 'bashrc-manjaro')
+conflicts=('bashrc-manjaro')
+install=bash.install
 source=(https://ftp.gnu.org/gnu/bash/bash-$_basever.tar.gz{,.sig}
-    'dot.bashrc'
-    'dot.bash_profile'
-    'dot.bash_logout'
-    'system.bashrc'
-    'system.bash_logout')
-
+        dot.bashrc
+        dot.bash_profile
+        dot.bash_logout
+        system.bashrc
+        system.bash_logout)
 validpgpkeys=('7C0135FB088AAF6C66C650B9BB5869F064EA74AB') # Chet Ramey
 
 if [[ $((10#${_patchlevel})) -gt 0 ]]; then
@@ -37,7 +40,7 @@ if [[ $((10#${_patchlevel})) -gt 0 ]]; then
 fi
 
 prepare() {
-  cd $pkgbase-$_basever
+  cd $pkgname-$_basever
 
   echo "Applying patches..."
   for (( _p=1; _p<=$((10#${_patchlevel})); _p++ )); do
@@ -48,7 +51,8 @@ prepare() {
 }
 
 build() {
-  cd $pkgbase-$_basever
+  cd $pkgname-$_basever
+
   _bashconfig=(-DDEFAULT_PATH_VALUE=\'\"/usr/local/sbin:/usr/local/bin:/usr/bin\"\'
                -DSTANDARD_UTILS_PATH=\'\"/usr/bin\"\'
                -DSYS_BASHRC=\'\"/etc/bash.bashrc\"\'
@@ -69,40 +73,20 @@ check() {
   make -C $pkgname-$_basever check
 }
 
-package_bash() {
-  pkgdesc='The GNU Bourne Again shell'
-  backup=(etc/bash.bash_logout etc/skel/.bash{_profile,_logout})
-  depends=('readline'
-           'libreadline.so'
-           'glibc'
-           'ncurses'
-           'bashrc')
-  optdepends=('bash-completion: for tab completion')
-  provides=('sh')
-  install=bash.install
-
+package() {
   make -C $pkgname-$_basever DESTDIR="$pkgdir" install
   ln -s bash "$pkgdir/usr/bin/sh"
   ln -s bash "$pkgdir/usr/bin/rbash"
 
   # system-wide configuration files
+  install -Dm644 system.bashrc "$pkgdir/etc/bash.bashrc"
   install -Dm644 system.bash_logout "$pkgdir/etc/bash.bash_logout"
 
   # user configuration file skeletons
   install -dm755 "$pkgdir/etc/skel/"
+  install -m644 dot.bashrc "$pkgdir/etc/skel/.bashrc"
   install -m644 dot.bash_profile "$pkgdir/etc/skel/.bash_profile"
   install -m644 dot.bash_logout "$pkgdir/etc/skel/.bash_logout"
-}
-
-package_bashrc-manjaro() {
-  pkgdesc="Manjaro's default bashrc"
-  arch=('any')
-  depends=('bash')
-  provides=('bashrc')
-  backup=('etc/bash.bashrc' 'etc/skel/.bashrc')
-
-  install -Dm644 system.bashrc "$pkgdir/etc/bash.bashrc"
-  install -Dm644 dot.bashrc "$pkgdir/etc/skel/.bashrc"
 }
 
 sha256sums=('a139c166df7ff4471c5e0733051642ee5556c1cc8a4a78f145583c5c81ab32fb'

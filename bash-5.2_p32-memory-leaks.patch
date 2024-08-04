@@ -78,28 +78,6 @@ index c85b05b6..bd7548cc 100644
        *name = result;
        return 1;
      }
-diff --git a/builtins/evalstring.c b/builtins/evalstring.c
-index df3dd68e..20c6a4a7 100644
---- builtins/evalstring.c
-+++ builtins/evalstring.c
-@@ -461,6 +461,8 @@ parse_and_execute (string, from_file, flags)
- 		      should_jump_to_top_level = 0;
- 		      last_result = last_command_exit_value = EX_BADUSAGE;
- 		      set_pipestatus_from_exit (last_command_exit_value);
-+		      dispose_command(command);
-+		      global_command = (COMMAND *)NULL;
- 		      reset_parser ();
- 		      break;
- 		    }
-@@ -762,6 +764,8 @@ open_redir_file (r, fnp)
- 
-   if (fnp)
-     *fnp = fn;
-+  else
-+    free (fn);
-   return fd;
- }
- 
 diff --git a/examples/loadables/stat.c b/examples/loadables/stat.c
 index 1e60e7b6..ed5c9764 100644
 --- examples/loadables/stat.c

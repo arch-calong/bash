@@ -3,8 +3,9 @@
 # Maintainer: Mark Wagie <mark at manjaro dot org>
 # Contributor: Helmut Stult
 # Contributor: Levente Polyak <anthraxx[at]archlinux[dot]org>
+# Contributor: Tobias Powalowski <tpowa@archlinux.org>
 # Contributor: Giancarlo Razzolini <grazzolini@archlinux.org>
-# Contributor: Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
+# Contributor:  Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
 # Contributor: Allan McRae <allan@archlinux.org>
 # Contributor: Aaron Griffin <aaron@archlinux.org>
 
@@ -17,25 +18,35 @@ pkgdesc='The GNU Bourne Again shell'
 arch=(x86_64)
 license=('GPL-3.0-or-later')
 url='https://www.gnu.org/software/bash/bash.html'
-backup=(etc/bash.bash{rc,_logout} etc/skel/.bash{rc,_profile,_logout})
-depends=(readline libreadline.so glibc ncurses)
+backup=(
+  etc/bash.bash{rc,_logout}
+  etc/skel/.bash{rc,_profile,_logout}
+)
+depends=(
+  readline
+  libreadline.so
+  glibc
+  ncurses
+)
 optdepends=('bash-completion: for tab completion')
 provides=('sh')
 conflicts=('bashrc-manjaro')
 replaces=('bashrc-manjaro')
 install=bash.install
-source=(https://ftp.gnu.org/gnu/bash/bash-$_basever.tar.gz{,.sig}
-        bash-5.2_p15-configure-clang16.patch
-        bash-5.2_p15-random-ub.patch
-        bash-5.2_p21-configure-strtold.patch
-        bash-5.2_p21-wpointer-to-int.patch
-        bash-5.2_p32-memory-leaks.patch
-        bash-5.2_p32-read-delimiter-in-invalid-mbchar.patch
-        dot.bashrc
-        dot.bash_profile
-        dot.bash_logout
-        system.bashrc
-        system.bash_logout)
+source=(
+  https://ftp.gnu.org/gnu/bash/bash-$_basever.tar.gz{,.sig}
+  bash-5.2_p15-configure-clang16.patch
+  bash-5.2_p15-random-ub.patch
+  bash-5.2_p21-configure-strtold.patch
+  bash-5.2_p21-wpointer-to-int.patch
+  bash-5.2_p32-memory-leaks.patch
+  bash-5.2_p32-read-delimiter-in-invalid-mbchar.patch
+  dot.bashrc
+  dot.bash_profile
+  dot.bash_logout
+  system.bashrc
+  system.bash_logout
+)
 validpgpkeys=('7C0135FB088AAF6C66C650B9BB5869F064EA74AB') # Chet Ramey
 
 if [[ $((10#${_patchlevel})) -gt 0 ]]; then
@@ -122,7 +133,7 @@ b2sums=('51b196e710794ebad8eac28c31c93eb99ac1a7db30919a13271e39e1cb66a0672f242df
         'SKIP')
 
 prepare() {
-  cd $pkgname-$_basever
+  cd "${pkgname}-${_basever}"
   for (( _p=1; _p<=$((10#${_patchlevel})); _p++ )); do
     local patch="bash${_basever//.}-$(printf "%03d" $_p)"
     patch -Np0 -i ../"${patch}"
@@ -138,7 +149,7 @@ prepare() {
 }
 
 build() {
-  cd $pkgname-$_basever
+  cd "${pkgname}-${_basever}"
 
   _bashconfig=(-DDEFAULT_PATH_VALUE=\'\"/usr/local/sbin:/usr/local/bin:/usr/bin\"\'
                -DSTANDARD_UTILS_PATH=\'\"/usr/bin\"\'
@@ -157,24 +168,23 @@ build() {
 }
 
 check() {
-  make -C $pkgname-$_basever check
+  make -C "${pkgname}-${_basever}" check
 }
 
 package() {
-  make -C $pkgname-$_basever DESTDIR="$pkgdir" install
-  ln -s bash "$pkgdir/usr/bin/sh"
-  ln -s bash "$pkgdir/usr/bin/rbash"
+  make -C "${pkgname}-${_basever}" DESTDIR="$pkgdir" install
+  ln -s bash "${pkgdir}/usr/bin/sh"
+  ln -s bash "${pkgdir}/usr/bin/rbash"
 
   # system-wide configuration files
-  install -Dm644 system.bashrc "$pkgdir/etc/bash.bashrc"
-  install -Dm644 system.bash_logout "$pkgdir/etc/bash.bash_logout"
+  install -Dm644 system.bashrc "${pkgdir}/etc/bash.bashrc"
+  install -Dm644 system.bash_logout "${pkgdir}/etc/bash.bash_logout"
 
   # user configuration file skeletons
-  install -dm755 "$pkgdir/etc/skel/"
-  install -m644 dot.bashrc "$pkgdir/etc/skel/.bashrc"
-  install -m644 dot.bash_profile "$pkgdir/etc/skel/.bash_profile"
-  install -m644 dot.bash_logout "$pkgdir/etc/skel/.bash_logout"
+  install -dm755 "${pkgdir}/etc/skel/"
+  install -m644 dot.bashrc "${pkgdir}/etc/skel/.bashrc"
+  install -m644 dot.bash_profile "${pkgdir}/etc/skel/.bash_profile"
+  install -m644 dot.bash_logout "${pkgdir}/etc/skel/.bash_logout"
 }
 
-# vim: ts=2 sw=2 et:
 

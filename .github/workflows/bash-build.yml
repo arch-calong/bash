@@ -31,10 +31,10 @@ jobs:
         shell: bash
         working-directory: ${{ env.workdir }}
         run: |
-          GITHUB_BRANCH=$(echo ${{ github.ref }}| cut -d'/' -f3)
           sed -i "s/MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j8\"/g" /etc/makepkg.conf
           cat /etc/makepkg.conf |grep "PACKAGER="
-          su - builder -c "git clone https://github.com/${{ github.repository }}.git -b ${GITHUB_BRANCH} src"
+          su - builder -c "git clone https://github.com/${{ github.repository }}.git -b  ${GITHUB_REF##*/} src"
+          cd src && pwd
       - name: Build bash
         shell: bash
         working-directory: ${{ env.workdir }}

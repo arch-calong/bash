@@ -32,14 +32,13 @@ jobs:
         working-directory: ${{ env.workdir }}
         run: |
           sed -i "s/MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j8\"/g" /etc/makepkg.conf
-          cat /etc/makepkg.conf |grep "PACKAGER="
           su - builder -c "git clone https://github.com/${{ github.repository }}.git -b  ${GITHUB_REF##*/} src"
           cd src && pwd && ls
       - name: Build bash
         shell: bash
         working-directory: ${{ env.workdir }}/src
         run: |
-          su - builder -c "makepkg PKGBUILD"
+          su - builder -c "cd /builder/src && makepkg PKGBUILD"
       - name: Upload packages
         uses: actions/upload-artifact@v4
         with:

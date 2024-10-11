@@ -37,7 +37,7 @@ jobs:
           cd src && pwd && ls
       - name: Build bash
         shell: bash
-        working-directory: ${{ env.workdir }}
+        working-directory: ${{ env.workdir }}/src
         run: |
           su - builder -c "makepkg PKGBUILD"
       - name: Upload packages

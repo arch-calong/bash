@@ -34,7 +34,7 @@ jobs:
           sed -i "s/MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j8\"/g" /etc/makepkg.conf
           cat /etc/makepkg.conf |grep "PACKAGER="
           su - builder -c "git clone https://github.com/${{ github.repository }}.git -b  ${GITHUB_REF##*/} src"
-          cd src && pwd
+          cd src && pwd && ls
       - name: Build bash
         shell: bash
         working-directory: ${{ env.workdir }}

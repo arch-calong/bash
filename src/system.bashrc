@@ -1,0 +1,1 @@
+/home/manjaro/sourcecommit/bash/system.bashrc

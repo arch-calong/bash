@@ -1,0 +1,1 @@
+/home/manjaro/sourcecommit/bash/bash-5.2.tar.gz.sig

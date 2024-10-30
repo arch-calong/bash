@@ -20,6 +20,7 @@ jobs:
         run: |
           echo HOME=/builder >> "$GITHUB_ENV"
           echo PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin >> "$GITHUB_ENV"
+          
       - name: Install build dependencies
         shell: bash
         working-directory: ${{ env.workdir }}
@@ -27,6 +28,7 @@ jobs:
           echo "Y"| sudo pacman -Sy base-devel git pacman sudo \
           bc docbook-xsl pahole inetutils \
           xmlto cpio make
+          
       - name: Clone repos
         shell: bash
         working-directory: ${{ env.workdir }}
@@ -34,15 +36,18 @@ jobs:
           sed -i "s/MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j8\"/g" /etc/makepkg.conf
           su - builder -c "git clone https://github.com/${{ github.repository }}.git -b  ${GITHUB_REF##*/} src"
           cd src && pwd && ls
+          
       - name: input public gpg key
         shell: bash
         run: |
           su - builder -c "gpg --recv-key BB5869F064EA74AB"
+          
       - name: Build bash
         shell: bash
         working-directory: ${{ env.workdir }}/src
         run: |
           su - builder -c "cd /builder/src && makepkg PKGBUILD"
+          
       - name: Sign
         shell: bash
         working-directory: ${{ env.workdir }}/src
@@ -56,6 +61,7 @@ jobs:
                 gpg --pinentry-mode loopback --passphrase "${{ secrets.CALONG_GPG_PASSWD }}" --detach-sign ${p}
               done
           fi
+          
       - name: Upload packages
         uses: actions/upload-artifact@v4
         with:
